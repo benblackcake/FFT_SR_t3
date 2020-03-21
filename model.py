@@ -50,7 +50,7 @@ class FFTSR:
         # pred_risidual = tf.spectral.irfft2d(tf.dtypes.cast(self.pred_risidual,tf.complex64))
 
         print('pred_risidual',(self.pred_risidual))
-        self.loss = tf.nn.l2_loss(self.concat_r_i)
+        self.loss = tf.nn.l2_loss(self.pred_risidual)
         # self.loss = tf.nn.l2_loss(ifft(self.sess.run(self.pred_risidual)))
 
 
@@ -183,6 +183,7 @@ class FFTSR:
         # # imshow_spectrum(w)
     # #
         result = self.pred.eval({self.images: lr_img,self.label:hr_img})
+        imshow_spectrum(result)
         result = ifft(result)
         # result = result*255/(1e3*1e-5)
         # result = np.clip(result, 0.0, 255.0).astype(np.uint8)
