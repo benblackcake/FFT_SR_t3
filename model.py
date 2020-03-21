@@ -52,9 +52,10 @@ class FFTSR:
         # x = None
         # print('source_fft',source_fft)
         self.f1, self.spectral_c1 = self.fft_conv_pure(self.images,filters=5,width=256,height=256,stride=1, name='conv1')
+        self.f2, self.spectral_c2 = self.fft_conv_pure(self.f1,filters=5,width=256,height=256,stride=1, name='conv1')
 
 
-        return self.f1
+        return self.f1+self.f2
     #
 
     def fft_conv_pure(self, source, filters, width, height, stride, activation='relu', name='fft_conv'):

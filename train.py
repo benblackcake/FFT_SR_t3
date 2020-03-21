@@ -25,9 +25,9 @@ if __name__ == '__main__':
         lr_img = fft(lr_img[:,:,0])
         # print(hr_img[:,:,0].shape)
         # print(lr_img[:,:,0].shape)
-        t = ifft(hr_img)
-        plt_imshow(t)
-        imshow_spectrum(hr_img)
+        # t = ifft(hr_img)
+        # plt_imshow(t)
+        # imshow_spectrum(hr_img)
 
         fftsr = FFTSR(sess, 1e-4, 10000)
 
