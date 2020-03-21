@@ -40,9 +40,9 @@ class FFTSR:
         # i = tf.imag(self.pred_risidual)
         #
         # tf.cast(tf.complex(r, i), tf.complex128)
-        pred_risidual = tf.signal.irfft2d(tf.dtypes.cast(self.pred_risidual,tf.complex64))
+        pred_risidual = tf.spectral.irfft2d(tf.dtypes.cast(self.pred_risidual,tf.complex64))
 
-        print(pred_risidual)
+        print('pred_risidual',pred_risidual)
         self.loss = tf.nn.l2_loss(pred_risidual)
         # self.loss = tf.nn.l2_loss(ifft(self.sess.run(self.pred_risidual)))
 
@@ -85,8 +85,12 @@ class FFTSR:
         c_r = tf.transpose(c_r, [0, 2, 3, 1]) # (1,256,256,5)
         c_i = tf.transpose(c_i, [0, 2, 3, 1])
 
-        c_r = tf.nn.conv2d(c_r, tf.real(smooth_fft), strides=[1, stride, stride, 1], padding='SAME',name='conv_real_part')
-        c_i = tf.nn.conv2d(c_i, tf.imag(smooth_fft), strides=[1, stride, stride, 1], padding='SAME',name='conv_imag_part')
+        # print(smooth_fft)
+        smooth_fft_r = np.real(smooth_fft)
+        smooth_fft_i = np.imag(smooth_fft)
+
+        c_r = tf.nn.conv2d(c_r, smooth_fft_r, strides=[1, stride, stride, 1], padding='SAME',name='conv_real_part')
+        c_i = tf.nn.conv2d(c_i, smooth_fft_i, strides=[1, stride, stride, 1], padding='SAME',name='conv_imag_part')
 
         c_r = tf.nn.bias_add(c_r, b)
         c_i = tf.nn.bias_add(c_i, b)
