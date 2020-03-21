@@ -37,7 +37,7 @@ class FFTSR:
         # self.pred = tf.real(tf.ifft2d(self.pred))
         # print(self.pred_risidual.eval(session=self.sess))
 
-        self.loss = tf.nn.l2_loss(tf.real(tf.ifft2d(self.pred_risidual)))
+        self.loss = tf.nn.l2_loss(tf.real(self.pred_risidual))
         # self.loss = tf.nn.l2_loss(ifft(self.sess.run(self.pred_risidual)))
 
 
