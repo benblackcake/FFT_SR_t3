@@ -29,7 +29,7 @@ if __name__ == '__main__':
         # plt_imshow(t)
         # imshow_spectrum(hr_img)
 
-        fftsr = FFTSR(sess, 1e-4, 10000)
+        fftsr = FFTSR(sess, 1e-3, 10000)
 
         # fftsr.build_model()
         # fftsr.run(hr_img,lr_img)
