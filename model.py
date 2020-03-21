@@ -32,14 +32,14 @@ class FFTSR:
 
         # self.label_risidual_fft = tf.complex(self.label_risidual, 0.0 * self.label_risidual) #self.label - self.images
 
-        self.pred_risidual = self.label_risidual - self.pred
+        self.pred_risidual = tf.abs(tf.ifft(self.label_risidual)) - tf.abs(tf.ifft(self.pred))
 
         r = tf.real(self.pred_risidual)
         i = tf.imag(self.pred_risidual)
 
-        self.concat_r_i = tf.concat([r,i],axis=0)
-        print(self.concat_r_i)
-        self.pred_risidual = tf.abs(tf.ifft2d(self.pred_risidual))
+        # self.concat_r_i = tf.concat([r,i],axis=0)
+        # print(self.concat_r_i)
+        # self.pred_risidual = tf.abs(tf.ifft2d(self.pred_risidual))
 
         # self.pred = tf.real(tf.ifft2d(self.pred))
         # print(self.pred_risidual.eval(session=self.sess))
@@ -66,8 +66,8 @@ class FFTSR:
         self.f5, self.spectral_c5 = self.fft_conv_pure(self.f4,filters=5,width=256,height=256,stride=1, name='conv5')
         self.f6, self.spectral_c6 = self.fft_conv_pure(self.f5,filters=5,width=256,height=256,stride=1, name='conv6')
 
-        f_ = self.f1+self.f2+self.f3+self.f4+self.f5+self.f6
-        return f_ * self.spectral_c6
+        f_ = self.f1#+self.f2+self.f3+self.f4+self.f5+self.f6
+        return f_ #* self.spectral_c6
     #
 
     def fft_conv_pure(self, source, filters, width, height, stride, activation='relu', name='fft_conv'):
@@ -173,9 +173,13 @@ class FFTSR:
             # imshow_spectrum(np.squeeze(source))
 
             # _residual = self.sess.run([self.label_risidual],feed_dict={self.images: lr_img, self.label:hr_img})
-            # _r = ifft(_residual)
+            # _r = tf.ifft2d(np.squeeze(_residual))
+            # _r = self.sess.run(tf.abs(_r))
             # # print(np.abs(_r))
+            # print(_r)
+            # # plt_imshow(np.squeeze(_r))
             # plt_imshow(np.squeeze(_r))
+
 
             print(x)
         # w = self.sess.run([self.spectral_c1],feed_dict={self.images: lr_img, self.label:hr_img})
