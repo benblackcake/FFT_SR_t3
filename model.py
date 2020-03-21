@@ -183,7 +183,7 @@ class FFTSR:
         # # imshow_spectrum(w)
     # #
         result = self.pred.eval({self.images: lr_img,self.label:hr_img})
-        imshow_spectrum(result)
+        imshow_spectrum(np.squeeze(result))
         result = ifft(result)
         # result = result*255/(1e3*1e-5)
         # result = np.clip(result, 0.0, 255.0).astype(np.uint8)
