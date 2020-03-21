@@ -3,7 +3,7 @@ from model import FFTSR
 import tensorflow as tf
 import numpy as np
 import cv2
-from utils import fft, bicubic, up_sample,imshow,ifft,imshow_spectrum
+from utils import fft, bicubic, up_sample,imshow,ifft,imshow_spectrum,plt_imshow
 from matplotlib import pyplot as plt
 
 if __name__ == '__main__':
@@ -20,13 +20,20 @@ if __name__ == '__main__':
     with tf.Session() as sess:
         hr_img = (img)/255.0 *(1e3*1e-5)
         lr_img = (up_sample(bicubic(img)))/255.0 *(1e3*1e-5)
-        # imshow_spectrum(lr_img)
+
+        hr_img = fft(hr_img[:,:,0])
+        lr_img = fft(lr_img[:,:,0])
+        # print(hr_img[:,:,0].shape)
+        # print(lr_img[:,:,0].shape)
+        t = ifft(hr_img)
+        plt_imshow(t)
+        imshow_spectrum(hr_img)
 
         fftsr = FFTSR(sess, 1e-4, 10000)
 
         # fftsr.build_model()
         # fftsr.run(hr_img,lr_img)
-        fftsr.run(hr_img[:,:,0],lr_img[:,:,0])
+        fftsr.run(hr_img,lr_img)
 
         # out = fftsr.pred
         # print(out)
