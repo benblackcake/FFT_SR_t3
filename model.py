@@ -40,10 +40,11 @@ class FFTSR:
         # i = tf.imag(self.pred_risidual)
         #
         # tf.cast(tf.complex(r, i), tf.complex128)
-        pred_risidual = tf.spectral.irfft2d(tf.dtypes.cast(self.pred_risidual,tf.complex64))
+        # a = ifft(self.pred_risidual.eval(session=self.sess))
+        # pred_risidual = tf.spectral.irfft2d(tf.dtypes.cast(self.pred_risidual,tf.complex64))
 
-        print('pred_risidual',pred_risidual)
-        self.loss = tf.nn.l2_loss(pred_risidual)
+        print('pred_risidual',tf.math.real(self.pred_risidual))
+        self.loss = tf.nn.l2_loss(tf.math.real(self.pred_risidual))
         # self.loss = tf.nn.l2_loss(ifft(self.sess.run(self.pred_risidual)))
 
 
