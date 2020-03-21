@@ -36,8 +36,14 @@ class FFTSR:
         # self.pred_risidual = tf.real(tf.ifft2d(self.pred_risidual))
         # self.pred = tf.real(tf.ifft2d(self.pred))
         # print(self.pred_risidual.eval(session=self.sess))
+        # r = tf.real(self.pred_risidual)
+        # i = tf.imag(self.pred_risidual)
+        #
+        # tf.cast(tf.complex(r, i), tf.complex128)
+        pred_risidual = tf.signal.irfft2d(tf.dtypes.cast(self.pred_risidual,tf.complex64))
 
-        self.loss = tf.nn.l2_loss(tf.real(self.pred_risidual))
+        print(pred_risidual)
+        self.loss = tf.nn.l2_loss(pred_risidual)
         # self.loss = tf.nn.l2_loss(ifft(self.sess.run(self.pred_risidual)))
 
 
