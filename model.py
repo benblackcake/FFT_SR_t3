@@ -39,7 +39,8 @@ class FFTSR:
 
         self.concat_r_i = tf.concat([r,i],axis=0)
         print(self.concat_r_i)
-        self.pred_risidual = tf.real(tf.ifft2d(self.pred_risidual))
+        self.pred_risidual = tf.abs(tf.ifft2d(self.pred_risidual))
+
         # self.pred = tf.real(tf.ifft2d(self.pred))
         # print(self.pred_risidual.eval(session=self.sess))
         # r = tf.real(self.pred_risidual)
