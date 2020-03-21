@@ -18,11 +18,11 @@ if __name__ == '__main__':
 
     # img = img.reshape([1,256,256,1])
     with tf.Session() as sess:
-        hr_img = (img)#/255.0 *(1e3*1e-5)
-        lr_img = (up_sample(bicubic(img)))#/255.0 *(1e3*1e-5)
+        hr_img = (img)/255.0 *(1e3*1e-5)
+        lr_img = (up_sample(bicubic(img)))/255.0 *(1e3*1e-5)
 
-        hr_img = fft(hr_img[:,:,0])*(1e3*1e-5)
-        lr_img = fft(lr_img[:,:,0])*(1e3*1e-5)
+        hr_img = fft(hr_img[:,:,0])
+        lr_img = fft(lr_img[:,:,0])
         # print(hr_img[:,:,0].shape)
         # print(lr_img[:,:,0].shape)
         # t = ifft(hr_img)
